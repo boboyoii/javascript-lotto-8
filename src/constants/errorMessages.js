@@ -1,5 +1,6 @@
 export const ERROR_MESSAGES = Object.freeze({
   PURCHASE: Object.freeze({
+    EMPTY_VALUE: '구입 금액을 입력해야 합니다.',
     NOT_NUMBER: '구입 금액은 숫자로 입력해야 합니다.',
     NOT_POSITIVE: '구입 금액은 0보다 커야 합니다.',
     NOT_THOUSAND_UNIT: '구입 금액은 1,000원 단위여야 합니다.',
