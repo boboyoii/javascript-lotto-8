@@ -7,9 +7,13 @@ class LottoManager {
   }
 
   async run() {
-    const input = await this.inputview.inputPurchaseAmount();
-    const amount = parser.parsePurchaseAmount(input);
-    validator.validatePurchaseAmount(amount);
+    const purchaseAmountInput = await this.inputview.inputPurchaseAmount();
+    const purchaseAmount = parser.parsePurchaseAmount(purchaseAmountInput);
+    validator.validatePurchaseAmount(purchaseAmount);
+
+    const winningNumbersInput = await this.inputview.inputWinningNumbers();
+    const winningNumbers = parser.parseWinningNumber(winningNumbersInput);
+    validator.validateWinningNumbers(winningNumbers);
   }
 }
 

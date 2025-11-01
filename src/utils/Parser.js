@@ -6,8 +6,20 @@ class Parser {
     if (validator.hasEmptyValue(input)) {
       throw new Error(ERROR_MESSAGES.EMPTY_VALUE);
     }
-    const amount = Number(input);
-    return amount;
+    return Number(input);
+  }
+
+  parseWinningNumber(input) {
+    if (validator.hasEmptyValue(input)) {
+      throw new Error(ERROR_MESSAGES.EMPTY_VALUE);
+    }
+
+    const numbers = input.split(',');
+    if (numbers.some((num) => validator.hasEmptyValue(num))) {
+      throw new Error(ERROR_MESSAGES.WINNING.HAS_EMPTY_VALUE);
+    }
+
+    return numbers.map(Number);
   }
 }
 
