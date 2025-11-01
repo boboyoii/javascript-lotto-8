@@ -21,6 +21,13 @@ class Parser {
 
     return numbers.map(Number);
   }
+
+  parseBonusNumber(input) {
+    if (validator.hasEmptyValue(input)) {
+      throw new Error(ERROR_MESSAGES.EMPTY_VALUE);
+    }
+    return Number(input);
+  }
 }
 
 const parser = new Parser();

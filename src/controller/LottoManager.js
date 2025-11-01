@@ -14,6 +14,10 @@ class LottoManager {
     const winningNumbersInput = await this.inputview.inputWinningNumbers();
     const winningNumbers = parser.parseWinningNumber(winningNumbersInput);
     validator.validateWinningNumbers(winningNumbers);
+
+    const bonusNumberInput = await this.inputview.inputBonusNumber();
+    const bonusNumber = parser.parseBonusNumber(bonusNumberInput);
+    validator.validateBonusNumber(bonusNumber, winningNumbers);
   }
 }
 
