@@ -1,6 +1,5 @@
 export const ERROR_MESSAGES = Object.freeze({
   PURCHASE: Object.freeze({
-    EMPTY_VALUE: '[ERROR] 구입 금액을 입력해야 합니다.',
     NOT_NUMBER: '[ERROR] 구입 금액은 숫자로 입력해야 합니다.',
     NOT_POSITIVE: '[ERROR] 구입 금액은 0보다 커야 합니다.',
     NOT_THOUSAND_UNIT: '[ERROR] 구입 금액은 1,000원 단위여야 합니다.',
@@ -21,4 +20,6 @@ export const ERROR_MESSAGES = Object.freeze({
     DUPLICATE_WITH_WINNING:
       '[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.',
   }),
+
+  EMPTY_VALUE: '[ERROR] 입력한 값이 없습니다.',
 });
