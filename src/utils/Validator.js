@@ -1,6 +1,34 @@
 class Validator {
+  validatePurchaseAmount(amount) {
+    if (this.hasEmptyValue(amount))
+      throw new Error(ERROR_MESSAGES.PURCHASE.EMPTY_VALUE);
+
+    if (this.isNotNumber(amount))
+      throw new Error(ERROR_MESSAGES.PURCHASE.NOT_NUMBER);
+
+    if (this.isNotPositive(amount))
+      throw new Error(ERROR_MESSAGES.PURCHASE.NOT_POSITIVE);
+
+    if (this.isNotThousandUnit(amount))
+      throw new Error(ERROR_MESSAGES.PURCHASE.NOT_THOUSAND_UNIT);
+  }
+
+  validateWinningNumbers(numbers) {
+    if (this.isNotSixCount(numbers))
+      throw new Error(ERROR_MESSAGES.WINNING.INVALID_COUNT);
+
+    if (numbers.some((num) => this.hasEmptyValue(num)))
+      throw new Error(ERROR_MESSAGES.WINNING.HAS_EMPTY_VALUE);
+
+    if (numbers.some((num) => this.isNotNumber(num)))
+      throw new Error(ERROR_MESSAGES.WINNING.HAS_NON_NUMBER);
+
+    if (numbers.some((num) => this.isOutOfRange(num)))
+      throw new Error(ERROR_MESSAGES.WINNING.OUT_OF_RANGE);
+  }
+
   hasEmptyValue(value) {
-    return value.trim() === '' || value == null;
+    return value == null || value.trim() === '';
   }
 
   isNotNumber(value) {
@@ -15,18 +43,13 @@ class Validator {
     return Number(value) % 1000 !== 0;
   }
 
-  validatePurchaseAmount(value) {
-    if (this.hasEmptyValue(value))
-      throw new Error(ERROR_MESSAGES.PURCHASE.EMPTY_VALUE);
+  isNotSixCount(values) {
+    return values.length !== 6;
+  }
 
-    if (this.isNotNumber(value))
-      throw new Error(ERROR_MESSAGES.PURCHASE.NOT_NUMBER);
-
-    if (this.isNotPositive(value))
-      throw new Error(ERROR_MESSAGES.PURCHASE.NOT_POSITIVE);
-
-    if (this.isNotThousandUnit(value))
-      throw new Error(ERROR_MESSAGES.PURCHASE.NOT_THOUSAND_UNIT);
+  isOutOfRange(value) {
+    const num = Number(value);
+    return num < 1 || num > 45;
   }
 }
 
