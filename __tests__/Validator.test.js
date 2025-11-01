@@ -28,31 +28,31 @@ describe('구입 금액 검증', () => {
 describe('당첨 번호 검증', () => {
   test('입력한 번호가 6개가 아니면 예외 발생', () => {
     expect(() =>
-      validator.validateWinningNumber(['1', '2', '3', '4', '5'])
+      validator.validateWinningNumbers(['1', '2', '3', '4', '5'])
     ).toThrow(ERROR_MESSAGES.WINNING.INVALID_COUNT);
   });
 
   test('비어 있는 값이 있으면 예외 발생', () => {
     expect(() =>
-      validator.validateWinningNumber(['1', '2', '', '4', '5', '6'])
+      validator.validateWinningNumbers(['1', '2', '', '4', '5', '6'])
     ).toThrow(ERROR_MESSAGES.WINNING.HAS_EMPTY_VALUE);
   });
 
   test('숫자가 아닌 값이 있으면 예외 발생', () => {
     expect(() =>
-      validator.validateWinningNumber(['1', '2', 'a', '4', '5', '6'])
+      validator.validateWinningNumbers(['1', '2', 'a', '4', '5', '6'])
     ).toThrow(ERROR_MESSAGES.WINNING.HAS_NON_NUMBER);
   });
 
   test('범위를 벗어난 숫자가 있으면 예외 발생', () => {
     expect(() =>
-      validator.validateWinningNumber(['1', '2', '3', '4', '5', '46'])
+      validator.validateWinningNumbers(['1', '2', '3', '4', '5', '46'])
     ).toThrow(ERROR_MESSAGES.WINNING.OUT_OF_RANGE);
   });
 
   test('정상 입력이면 통과', () => {
     expect(() =>
-      validator.validateWinningNumber(['1', '2', '3', '4', '5', '6'])
+      validator.validateWinningNumbers(['1', '2', '3', '4', '5', '6'])
     ).not.toThrow();
   });
 });

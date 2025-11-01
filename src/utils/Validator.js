@@ -1,3 +1,5 @@
+import { ERROR_MESSAGES } from '../constants/errorMessages.js';
+
 class Validator {
   validatePurchaseAmount(amount) {
     if (this.hasEmptyValue(amount))
@@ -27,12 +29,23 @@ class Validator {
       throw new Error(ERROR_MESSAGES.WINNING.OUT_OF_RANGE);
   }
 
+  validateBonusNumber(number) {
+    if (this.hasEmptyValue(number))
+      throw new Error(ERROR_MESSAGES.BONUS.EMPTY_VALUE);
+
+    if (this.isNotNumber(number))
+      throw new Error(ERROR_MESSAGES.BONUS.NOT_NUMBER);
+
+    if (this.isOutOfRange(number))
+      throw new Error(ERROR_MESSAGES.BONUS.OUT_OF_RANGE);
+  }
+
   hasEmptyValue(value) {
     return value == null || value.trim() === '';
   }
 
   isNotNumber(value) {
-    return Number.isNaN(value);
+    return Number.isNaN(Number(value));
   }
 
   isNotPositive(value) {
