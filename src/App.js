@@ -6,8 +6,13 @@ import OuputView from './View/OutputView.js';
 class App {
   async run() {
     const inputView = new InputView();
+    const outputView = new OuputView();
     const lottoGenerator = new LottoGenerator();
-    const lottoManager = new LottoManager(inputView, lottoGenerator);
+    const lottoManager = new LottoManager(
+      inputView,
+      outputView,
+      lottoGenerator
+    );
     lottoManager.run();
   }
 }
