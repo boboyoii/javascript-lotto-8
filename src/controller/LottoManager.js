@@ -11,7 +11,7 @@ class LottoManager {
 
   async play() {
     const lottos = await this.purchaseLottos();
-    const { winningNumbers, bonusNumber } = await this.pickWinningSet();
+    const { winningNumbers, bonusNumber } = await this.inputWinningSet();
     this.showResult(lottos, winningNumbers, bonusNumber);
   }
 
@@ -27,7 +27,7 @@ class LottoManager {
     return lottos;
   }
 
-  async pickWinningSet() {
+  async inputWinningSet() {
     const winningNumbers = await this.readWithRetry(
       () => this.input.inputWinningNumbers(),
       (winningNumbersInput) => parser.parseWinningNumbers(winningNumbersInput)
