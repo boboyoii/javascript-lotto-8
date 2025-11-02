@@ -1,3 +1,4 @@
+import { Console } from '@woowacourse/mission-utils';
 import parser from '../utils/Parser.js';
 
 class LottoManager {
@@ -10,13 +11,15 @@ class LottoManager {
 
   async play() {
     const lottos = await this.purchaseLottos();
-    const { winningNumbers, bonusNumber } = await this.pickWinningNumbers();
+    const { winningNumbers, bonusNumber } = await this.pickWinningSet();
     this.showResult(lottos, winningNumbers, bonusNumber);
   }
 
   async purchaseLottos() {
-    const amountInput = await this.input.inputPurchaseAmount();
-    const amount = parser.parsePurchaseAmount(amountInput);
+    const amount = await this.readWithRetry(
+      () => this.input.inputPurchaseAmount(),
+      (amountInput) => parser.parsePurchaseAmount(amountInput)
+    );
 
     const lottos = this.generator.generateLottos(amount);
 
@@ -24,14 +27,16 @@ class LottoManager {
     return lottos;
   }
 
-  async pickWinningNumbers() {
-    const winningNumbersInput = await this.input.inputWinningNumbers();
-    const winningNumbers = parser.parseWinningNumbers(winningNumbersInput);
+  async pickWinningSet() {
+    const winningNumbers = await this.readWithRetry(
+      () => this.input.inputWinningNumbers(),
+      (winningNumbersInput) => parser.parseWinningNumbers(winningNumbersInput)
+    );
 
-    const bonusNumberInput = await this.input.inputBonusNumber();
-    const bonusNumber = parser.parseBonusNumber(
-      bonusNumberInput,
-      winningNumbers
+    const bonusNumber = await this.readWithRetry(
+      () => this.input.inputBonusNumber(),
+      (bonusNumberInput) =>
+        parser.parseBonusNumber(bonusNumberInput, winningNumbers)
     );
 
     return { winningNumbers, bonusNumber };
@@ -45,6 +50,17 @@ class LottoManager {
     );
 
     this.output.showWinningStats(result);
+  }
+
+  async readWithRetry(readFn, parseFn) {
+    while (true) {
+      try {
+        const input = await readFn();
+        return parseFn(input);
+      } catch (err) {
+        Console.print(err.message);
+      }
+    }
   }
 }
 

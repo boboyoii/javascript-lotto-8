@@ -19,10 +19,10 @@ class Parser {
       throw new Error(ERROR_MESSAGES.WINNING.HAS_EMPTY_VALUE);
     }
 
-    const winningsNumbers = tokens.map(Number);
-    validator.validateWinningNumbers(winningsNumbers);
+    const winningNumbers = tokens.map(Number);
+    validator.validateWinningNumbers(winningNumbers);
 
-    return winningsNumbers;
+    return winningNumbers;
   }
 
   parseBonusNumber(input, winningNumbers) {
