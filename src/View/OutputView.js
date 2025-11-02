@@ -1,9 +1,9 @@
 import { Console } from '@woowacourse/mission-utils';
-import { LOTTO_REWARD } from '../constants/LottoConstants.js';
+import { OUTPUT_MESSAGE, OUTPUT_TEMPLATES } from '../constants/viewMessages.js';
 
-class OuputView {
+class OutputView {
   showPurchasedLottos(lottos) {
-    const header = `\n${lottos.length}개를 구매했습니다.\n`;
+    const header = OUTPUT_TEMPLATES.PURCHASE_HEADER(lottos.length);
     const lottoLines = lottos
       .map((lotto) => `[${lotto.getNumbers().join(', ')}]`)
       .join('\n');
@@ -12,32 +12,24 @@ class OuputView {
   }
 
   showWinningStats(result) {
+    Console.print(OUTPUT_MESSAGE.WINNINT_STATS_HEADER);
     this.showRankCounts(result.getCountsByRank());
     this.showProfitRate(result.getProfitRate());
   }
 
   showRankCounts(counts) {
-    const lines = [
-      '\n당첨 통계',
-      '---',
-      `3개 일치 (${LOTTO_REWARD.FIFTH.toLocaleString()}원) - ${counts.FIFTH}개`,
-      `4개 일치 (${LOTTO_REWARD.FOURTH.toLocaleString()}원) - ${
-        counts.FOURTH
-      }개`,
-      `5개 일치 (${LOTTO_REWARD.THIRD.toLocaleString()}원) - ${counts.THIRD}개`,
-      `5개 일치, 보너스 볼 일치 (${LOTTO_REWARD.SECOND.toLocaleString()}원) - ${
-        counts.SECOND
-      }개`,
-      `6개 일치 (${LOTTO_REWARD.FIRST.toLocaleString()}원) - ${counts.FIRST}개`,
-      '',
-    ].join('\n');
+    const rankOrder = ['FIFTH', 'FOURTH', 'THIRD', 'SECOND', 'FIRST'];
 
-    Console.print(lines);
+    const formattedLines = rankOrder.map((rank) =>
+      OUTPUT_TEMPLATES.RANK_RESULT[rank](counts[rank])
+    );
+
+    Console.print(formattedLines.join('\n'));
   }
 
   showProfitRate(profitRate) {
-    Console.print(`총 수익률은 ${profitRate.toLocaleString()}%입니다.`);
+    Console.print(OUTPUT_TEMPLATES.PROFIT_RATE(profitRate));
   }
 }
 
-export default OuputView;
+export default OutputView;
