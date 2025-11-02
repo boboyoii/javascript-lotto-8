@@ -29,6 +29,8 @@ class LottoManager {
       winningNumbers,
       bonusNumber
     );
+
+    this.output.showWinningStats(result);
   }
 }
 

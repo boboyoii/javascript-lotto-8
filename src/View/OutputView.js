@@ -11,6 +11,11 @@ class OuputView {
     Console.print(`${header}${lottoLines}`);
   }
 
+  showWinningStats(result) {
+    this.showRankCounts(result.getCountsByRank());
+    this.showProfitRate(result.getProfitRate());
+  }
+
   showRankCounts(counts) {
     const lines = [
       '\n당첨 통계',
@@ -28,6 +33,10 @@ class OuputView {
     ].join('\n');
 
     Console.print(lines);
+  }
+
+  showProfitRate(profitRate) {
+    Console.print(`총 수익률은 ${profitRate.toLocaleString()}%입니다.`);
   }
 }
 
