@@ -3,30 +3,41 @@ import validator from '../utils/Validator.js';
 
 class Parser {
   parsePurchaseAmount(input) {
-    if (validator.hasEmptyValue(input)) {
-      throw new Error(ERROR_MESSAGES.EMPTY_VALUE);
-    }
-    return Number(input);
+    this.validateEmptyInput(input);
+
+    const amount = Number(input);
+    validator.validatePurchaseAmount(amount);
+
+    return amount;
   }
 
-  parseWinningNumber(input) {
-    if (validator.hasEmptyValue(input)) {
-      throw new Error(ERROR_MESSAGES.EMPTY_VALUE);
-    }
+  parseWinningNumbers(input) {
+    this.validateEmptyInput(input);
 
-    const numbers = input.split(',');
-    if (numbers.some((num) => validator.hasEmptyValue(num))) {
+    const tokens = input.split(',');
+    if (tokens.some((token) => validator.hasEmptyValue(token))) {
       throw new Error(ERROR_MESSAGES.WINNING.HAS_EMPTY_VALUE);
     }
 
-    return numbers.map(Number);
+    const winningsNumbers = tokens.map(Number);
+    validator.validateWinningNumbers(winningsNumbers);
+
+    return winningsNumbers;
   }
 
-  parseBonusNumber(input) {
+  parseBonusNumber(input, winningNumbers) {
+    this.validateEmptyInput(input);
+
+    const bonusNumber = Number(input);
+    validator.validateBonusNumber(bonusNumber, winningNumbers);
+
+    return bonusNumber;
+  }
+
+  validateEmptyInput(input) {
     if (validator.hasEmptyValue(input)) {
       throw new Error(ERROR_MESSAGES.EMPTY_VALUE);
     }
-    return Number(input);
   }
 }
 
