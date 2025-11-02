@@ -6,6 +6,7 @@ class LottoResultAnalyzer {
     const result = new LottoResult();
 
     this.updateRankCounts(result, lottos, winningNumbers, bonusNumber);
+    this.updateProfitRate(result, lottos.length);
 
     return result;
   }
@@ -29,6 +30,20 @@ class LottoResultAnalyzer {
     if (match === 4) return 'FOURTH';
     if (match === 3) return 'FIFTH';
     return -1;
+  }
+
+  updateProfitRate(result, lottoCount) {
+    const countsByRank = result.getCountsByRank();
+
+    let totalPrize = 0;
+    Object.entries(countsByRank).forEach(([rank, count]) => {
+      const prize = LOTTO_REWARD[rank];
+      totalPrize += prize * count;
+    });
+
+    const spent = lottoCount * LOTTO_PRICE;
+    const rate = (totalPrize / spent) * 100;
+    result.setProfitRate(rate.toFixed(1));
   }
 }
 
