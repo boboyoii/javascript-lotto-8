@@ -10,13 +10,14 @@ class App {
     const outputView = new OutputView();
     const lottoGenerator = new LottoGenerator();
     const lottoResultAnalyzer = new LottoResultAnalyzer();
+
     const lottoManager = new LottoManager(
       inputView,
       outputView,
       lottoGenerator,
       lottoResultAnalyzer
     );
-    lottoManager.run();
+    await lottoManager.play();
   }
 }
 

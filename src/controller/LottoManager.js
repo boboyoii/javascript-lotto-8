@@ -8,13 +8,23 @@ class LottoManager {
     this.resultAnalyzer = resultAnalyzer;
   }
 
-  async run() {
-    const purchaseAmountInput = await this.input.inputPurchaseAmount();
-    const purchaseAmount = parser.parsePurchaseAmount(purchaseAmountInput);
+  async play() {
+    const lottos = await this.purchaseLottos();
+    const { winningNumbers, bonusNumber } = await this.pickWinningNumbers();
+    this.showResult(lottos, winningNumbers, bonusNumber);
+  }
 
-    const lottos = this.generator.generateLottos(purchaseAmount);
+  async purchaseLottos() {
+    const amountInput = await this.input.inputPurchaseAmount();
+    const amount = parser.parsePurchaseAmount(amountInput);
+
+    const lottos = this.generator.generateLottos(amount);
+
     this.output.showPurchasedLottos(lottos);
+    return lottos;
+  }
 
+  async pickWinningNumbers() {
     const winningNumbersInput = await this.input.inputWinningNumbers();
     const winningNumbers = parser.parseWinningNumbers(winningNumbersInput);
 
@@ -24,6 +34,10 @@ class LottoManager {
       winningNumbers
     );
 
+    return { winningNumbers, bonusNumber };
+  }
+
+  showResult(lottos, winningNumbers, bonusNumber) {
     const result = this.resultAnalyzer.analyzeLottoResult(
       lottos,
       winningNumbers,
