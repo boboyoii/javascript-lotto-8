@@ -1,4 +1,5 @@
 import { ERROR_MESSAGES } from '../constants/errorMessages.js';
+import { BOUND, LOTTO_PRICE, SIZE } from '../constants/LottoConstants.js';
 
 class Validator {
   validatePurchaseAmount(amount) {
@@ -50,15 +51,15 @@ class Validator {
   }
 
   isNotThousandUnit(value) {
-    return value % 1000 !== 0;
+    return value % LOTTO_PRICE !== 0;
   }
 
   isNotSixCount(values) {
-    return values.length !== 6;
+    return values.length !== SIZE;
   }
 
   isOutOfRange(value) {
-    return value < 1 || value > 45;
+    return value < BOUND.LOWER || value > BOUND.UPPER;
   }
 
   hasDuplicate(values) {

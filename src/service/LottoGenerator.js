@@ -1,5 +1,6 @@
 import { Random } from '@woowacourse/mission-utils';
 import Lotto from '../model/Lotto.js';
+import { BOUND, LOTTO_PRICE, SIZE } from '../constants/LottoConstants.js';
 
 class LottoGenerator {
   generateLottos(amount) {
@@ -8,11 +9,11 @@ class LottoGenerator {
   }
 
   #calcCount(amount) {
-    return amount / 1000;
+    return amount / LOTTO_PRICE;
   }
 
   #drawNumbers() {
-    return Random.pickUniqueNumbersInRange(1, 45, 6);
+    return Random.pickUniqueNumbersInRange(BOUND.LOWER, BOUND.UPPER, SIZE);
   }
 }
 
